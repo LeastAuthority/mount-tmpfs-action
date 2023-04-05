@@ -1,7 +1,7 @@
 # mount-tmpfs
 GitHub action to create and mount a temporary disk in memory.
 
-It can be uses as an attempt to keep secrets from being written to disk.
+It can be used as an attempt to keep secrets from being written to disk.
 
 ## Usage
 
