@@ -9,19 +9,20 @@ It can be uses as an attempt to keep secrets from being written to disk.
             changing the values.
 
 ```yaml
-- name: Get a tmpfs for our secret
-  id: tmpfs
-  uses: LeastAuthority/mount-tmpfs@v1
-  with:
-    size: 2
-    root: '/mnt'
+    - name: Get a tmpfs for our secret
+      id: tmpfs
+      uses: LeastAuthority/mount-tmpfs@v1
+      with:
+        size: 2
+        root: '/mnt'
 ```
 
 The action then returns the uuid and the mount point of the tmpfs as outputs.
 
 ```yaml
-- name: Import secret in tmpfs
-  run:
-    cat <<EOF > "${{ steps.tmpfs.outputs.mnt }}/secret_key"
-    ${{ secrets.KEY }}
+    - name: Import secret in tmpfs
+      run: |
+        cat <<EOF > "${{ steps.tmpfs.outputs.mnt }}/secret_key"
+        ${{ secrets.KEY }}
+        EOF
 ```
