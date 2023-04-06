@@ -30,10 +30,10 @@ jobs:
       - name: Verify FS
         id: verify
         run: |
-          cat <<EOF > "${{  steps.call.outputs.mnt }}/content"
+          cat <<EOF > "${{ steps.call.outputs.mnt }}/content"
           ${{ env.TEST_CONTENT }}
           EOF
-          test $(cat "${{  steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}""
+          test $(cat "${{ steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}"
         continue-on-error: true
 
       - name: Cleanup
@@ -45,8 +45,8 @@ jobs:
       - name: Proper exit
         run: |
           if [ ${{ steps.call.outcome }} != 'success' \
-                -o steps.verify.outcome }} != 'success' \
-                -o steps.cleanup.outcome }} != 'success' ]
+                -o ${{ steps.verify.outcome }} != 'success' \
+                -o ${{ steps.cleanup.outcome }} != 'success' ]
           then
             echo ":x: Test failed" >> $GITHUB_STEP_SUMMARY
             exit 1
@@ -72,7 +72,7 @@ jobs:
           cat <<EOF > "${{  steps.call.outputs.mnt }}/content"
           ${{ env.TEST_CONTENT }}
           EOF
-          test $(cat "${{  steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}""
+          test $(cat "${{  steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}"
         continue-on-error: true
 
       - name: Cleanup
@@ -84,8 +84,8 @@ jobs:
       - name: Proper exit
         run: |
           if [ ${{ steps.call.outcome }} != 'success' \
-                -o steps.verify.outcome }} != 'success' \
-                -o steps.cleanup.outcome }} != 'success' ]
+                -o ${{ steps.verify.outcome }} != 'success' \
+                -o ${{ steps.cleanup.outcome }} != 'success' ]
           then
             echo ":x: Test failed" >> $GITHUB_STEP_SUMMARY
             exit 1
@@ -107,10 +107,10 @@ jobs:
       - name: Verify FS
         id: verify
         run: |
-          cat <<EOF > "${{  steps.call.outputs.mnt }}/content"
+          cat <<EOF > "${{ steps.call.outputs.mnt }}/content"
           ${{ env.TEST_CONTENT }}
           EOF
-          test $(cat "${{  steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}""
+          test $(cat "${{ steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}"
         continue-on-error: true
 
       - name: Cleanup
@@ -122,8 +122,8 @@ jobs:
       - name: Proper exit
         run: |
           if [ ${{ steps.call.outcome }} != 'success' \
-                -o steps.verify.outcome }} != 'success' \
-                -o steps.cleanup.outcome }} != 'success' ]
+                -o ${{ steps.verify.outcome }} != 'success' \
+                -o ${{ steps.cleanup.outcome }} != 'success' ]
           then
             echo ":x: Test failed" >> $GITHUB_STEP_SUMMARY
             exit 1
