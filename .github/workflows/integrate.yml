@@ -13,6 +13,8 @@ on:
     paths:
       - '.github/workflows/integrate.yml'
       - 'action.yml'
+env:
+  TEST_CONTENT: "This is a content string for test"
 jobs:
   test_defaults:
     name: Test defaults
@@ -21,12 +23,36 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Call action w/o inputs
-        id: test
+        id: call
         uses: ./
+        continue-on-error: true
+
+      - name: Verify FS
+        id: verify
+        run: |
+          cat <<EOF > "${{  steps.call.outputs.mnt }}/content"
+          ${{ env.TEST_CONTENT }}
+          EOF
+          test $(cat "${{  steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}""
+        continue-on-error: true
 
       - name: Cleanup
+        id: cleanup
         run: |
-          sudo umount "${{ steps.test.outputs.mnt }}"
+          sudo umount "${{ steps.call.outputs.mnt }}"
+        continue-on-error: true
+
+      - name: Proper exit
+        run: |
+          if [ ${{ steps.call.outcome }} != 'success' \
+                -o steps.verify.outcome }} != 'success' \
+                -o steps.cleanup.outcome }} != 'success' ]
+          then
+            echo ":x: Test failed" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          else
+            echo ":heavy_check_mark: Test succeeded" >> $GITHUB_STEP_SUMMARY
+
   test_size:
     name: Test size
     runs-on: ubuntu-latest
