@@ -11,7 +11,7 @@ It can be used as an attempt to keep secrets from being written to disk.
 ```yaml
     - name: Get a tmpfs for our secret
       id: tmpfs
-      uses: LeastAuthority/mount-tmpfs@v1
+      uses: LeastAuthority/mount-tmpfs-action@v1
       with:
         size: 2
         root: '/mnt'
