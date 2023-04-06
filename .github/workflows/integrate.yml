@@ -14,16 +14,46 @@ on:
       - '.github/workflows/integrate.yml'
       - 'action.yml'
 jobs:
-  integrate:
-    name: Integration tests
+  test_defaults:
+    name: Test defaults
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Call action w/o paramters
-        id: test_defaults
+      - name: Call action w/o inputs
+        id: test
         uses: ./
 
-      - name: Cleanup action w/o paramters
+      - name: Cleanup
         run: |
-          sudo umount "${{ steps.test_defaults.outputs.mnt }}"
+          sudo umount "${{ steps.test.outputs.mnt }}"
+  test_size:
+    name: Test size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Call action with size
+        id: test
+        uses: ./
+        with:
+          size: 4
+
+      - name: Cleanup
+        run: |
+          sudo umount "${{ steps.test.outputs.mnt }}"
+  test_root:
+    name: Test root
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Call action with root
+        id: test
+        uses: ./
+        with:
+          root: ./test_root
+
+      - name: Cleanup
+        run: |
+          sudo umount "${{ steps.test.outputs.mnt }}"
