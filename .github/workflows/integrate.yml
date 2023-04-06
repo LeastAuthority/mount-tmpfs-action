@@ -1,0 +1,29 @@
+name: Integration
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/integrate.yml'
+      - 'action.yml'
+  pull_request:
+    branches:    
+      - main
+    paths:
+      - '.github/workflows/integrate.yml'
+      - 'action.yml'
+jobs:
+  integrate:
+    name: Integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Call action w/o paramters
+        id: test_defaults
+        uses: ./
+
+      - name: Cleanup action w/o paramters
+        run: |
+          sudo umount "${{ steps.test_defaults.outputs.mnt }}"
