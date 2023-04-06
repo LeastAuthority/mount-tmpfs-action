@@ -33,7 +33,7 @@ jobs:
           cat <<EOF > "${{ steps.call.outputs.mnt }}/content"
           ${{ env.TEST_CONTENT }}
           EOF
-          test $(cat "${{ steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}"
+          [ $(cat "${{ steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}" ]
         continue-on-error: true
 
       - name: Cleanup
@@ -72,7 +72,7 @@ jobs:
           cat <<EOF > "${{  steps.call.outputs.mnt }}/content"
           ${{ env.TEST_CONTENT }}
           EOF
-          test $(cat "${{  steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}"
+          [ $(cat "${{  steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}" ]
         continue-on-error: true
 
       - name: Cleanup
@@ -110,7 +110,7 @@ jobs:
           cat <<EOF > "${{ steps.call.outputs.mnt }}/content"
           ${{ env.TEST_CONTENT }}
           EOF
-          test $(cat "${{ steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}"
+          [ $(cat "${{ steps.call.outputs.mnt }}/content") = "${{ env.TEST_CONTENT }}" ]
         continue-on-error: true
 
       - name: Cleanup
