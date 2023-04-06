@@ -26,3 +26,11 @@ The action then returns the uuid and the mount point of the tmpfs as outputs.
         ${{ secrets.KEY }}
         EOF
 ```
+
+Optionally, the tmpfs could be removed when no longer needed.
+
+```yaml
+    - name: Cleanup
+      run: |
+        sudo umount "${{ steps.tmpfs.outputs.mnt }}"
+```
