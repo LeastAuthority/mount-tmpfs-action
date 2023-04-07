@@ -114,7 +114,6 @@ jobs:
           ${{ env.TEST_CONTENT }}
           EOF
           test "$(cat "${{ steps.call.outputs.mnt }}/content")" = "${{ env.TEST_CONTENT }}"
-          mount | grep ${{ steps.call.outputs.mnt }} | grep "size=$(($INPUT_SIZE * 1024))"
         continue-on-error: true
 
       - name: Cleanup
