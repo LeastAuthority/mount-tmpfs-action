@@ -57,6 +57,8 @@ jobs:
   test_size:
     name: Test size
     runs-on: ubuntu-latest
+    env:
+      SIZE: 4
     steps:
       - uses: actions/checkout@v3
 
@@ -64,7 +66,7 @@ jobs:
         id: call
         uses: ./
         with:
-          size: 4
+          size: ${{ env.SIZE }}
 
       - name: Verify FS
         id: verify
@@ -73,6 +75,7 @@ jobs:
           ${{ env.TEST_CONTENT }}
           EOF
           test "$(cat "${{  steps.call.outputs.mnt }}/content")" = "${{ env.TEST_CONTENT }}"
+          mount | grep ${{ steps.call.outputs.mnt }} | grep "size=$((${{ env.SIZE }} * 1024))"
         continue-on-error: true
 
       - name: Cleanup
@@ -111,6 +114,7 @@ jobs:
           ${{ env.TEST_CONTENT }}
           EOF
           test "$(cat "${{ steps.call.outputs.mnt }}/content")" = "${{ env.TEST_CONTENT }}"
+          mount | grep ${{ steps.call.outputs.mnt }} | grep "size=$(($INPUT_SIZE * 1024))"
         continue-on-error: true
 
       - name: Cleanup
