@@ -29,7 +29,7 @@ runs:
         sudo mkdir -p "${MNT}" \
         && echo ":heavy_check_mark: Temp FS mount point creation succeeded" >> $GITHUB_STEP_SUMMARY \
         || { echo ":x: Temp FS  mount point creation failed" >> $GITHUB_STEP_SUMMARY; exit 1; }
-        sudo mount -o size=${{ inputs.size }},uid=$(id -u) -t tmpfs tmpfs "${MNT}" \
+        sudo mount -o size=${{ inputs.size }}M,uid=$(id -u) -t tmpfs tmpfs "${MNT}" \
         && echo ":heavy_check_mark: Temp FS mount operation succeeded" >> $GITHUB_STEP_SUMMARY \
         || { echo ":x: Temp FS mount operation failed" >> $GITHUB_STEP_SUMMARY; exit 1; } 
         echo "uuid=${UUID}" >> $GITHUB_OUTPUT
