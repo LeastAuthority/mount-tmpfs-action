@@ -23,6 +23,7 @@ runs:
       id: create
       shell: bash
       run: |
+        which uuidgen || sudo apt -y install uuid-runtime
         UUID="$(uuidgen)"
         MNT="${{ inputs.root }}/${UUID}"
         echo ":rocket: Temp FS ${MNT} creation started" >> $GITHUB_STEP_SUMMARY
